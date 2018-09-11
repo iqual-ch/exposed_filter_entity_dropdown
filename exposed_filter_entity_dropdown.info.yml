@@ -1,0 +1,6 @@
+name: Exposed Filter Entity Dropdown
+description: Changes the exposed filter text input field to a select dropdown
+package: Custom
+
+type: module
+core: 8.x

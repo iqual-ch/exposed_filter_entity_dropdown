@@ -1,0 +1,42 @@
+<?php
+ 
+/**
+ * @file
+ * Contains exposed_filter_entity_dropdown.module.
+ */
+ 
+  use Drupal\Core\Form\FormStateInterface;
+ 
+  /**
+   * Implements hook_form_FORM_ID_alter().
+   *
+   * Alters authorfield to a select dropdown
+   */
+  function exposed_filter_entity_dropdown_form_views_exposed_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+ 
+    // If not the view we are looking, move on
+    if ($form['#id'] != 'views-exposed-form-certificates-page-1') {
+     return FALSE;
+    }
+
+    // Load data (users) and write them into an array
+    $users = user_load_multiple();
+    $options = [];
+    foreach ($users as $user) {
+      if( $user->field_name->getString() && $user->hasRole('member')  ){
+        $options[$user->id()] = $user->field_name->getString();
+      }
+    }
+
+    // Start building out our new form element
+    $authorfield = 'uid_raw';
+    $form[$authorfield]['#type'] = 'select';
+    $form[$authorfield]['#multiple'] = FALSE;
+ 
+    // Specify the empty option for our select list
+    $form[$authorfield]['#empty_option'] = t('- Any -');
+ 
+    // Add the $options from above to our select list
+    $form[$authorfield]['#options'] = $options;
+    unset($form[$authorfield]['#size']);
+  }
