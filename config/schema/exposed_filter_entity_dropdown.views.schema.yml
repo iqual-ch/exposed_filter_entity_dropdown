@@ -1,0 +1,28 @@
+# Schema for the views plugins of the Taxonomy module.
+
+views.argument.node_index_nid:
+  type: views.argument.many_to_one
+  label: 'Node ID'
+
+views.filter.node_index_nid:
+  type: views.filter.many_to_one
+  label: 'Node ID'
+  mapping:
+    ctype:
+      type: string
+      label: 'Content type'
+    type:
+      type: string
+      label: 'Selection type'
+    limit:
+      type: boolean
+      label: 'Limit to content type'
+    error_message:
+      type: boolean
+      label: 'Display error message'
+    value:
+      type: sequence
+      label: 'Values'
+      sequence:
+        type: integer
+        label: 'Value'
