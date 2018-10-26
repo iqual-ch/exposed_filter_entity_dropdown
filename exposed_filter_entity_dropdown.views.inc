@@ -38,7 +38,7 @@ function exposed_filter_entity_dropdown_field_views_data_alter(array &$data, Fie
 
 function exposed_filter_entity_dropdown_views_data_alter(array &$data)
 {
-    $data['node_field_data']['autocomplete_user'] = [
+    $data['node_field_data']['autocomplete_uid'] = [
         'title' => t('Authored By [Autocomplete Filter]'),
         'group' => t('Content'),
         'title short' => t('Authored By [Autocomplete Filter]'),
