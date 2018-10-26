@@ -181,7 +181,7 @@ class NodeIndexNid extends ManyToOne
             }
             $nodes = Node::loadMultiple($query->execute());
             foreach ($nodes as $node) {
-                $options[$node->id()] = \Drupal::entityManager()->getTranslationFromContext($node)->label();
+                $options[$node->id()] = \Drupal::entityTypeManager()->getTranslationFromContext($node)->label();
             }
 
             $default_value = (array) $this->value;
@@ -349,7 +349,7 @@ class NodeIndexNid extends ManyToOne
             $this->value = array_filter($this->value);
             $nodes = Node::loadMultiple($this->value);
             foreach ($nodes as $node) {
-                $this->valueOptions[$node->id()] = \Drupal::entityManager()->getTranslationFromContext($node)->label();
+                $this->valueOptions[$node->id()] = \Drupal::entityTypeManager()->getTranslationFromContext($node)->label();
             }
         }
         return parent::adminSummary();

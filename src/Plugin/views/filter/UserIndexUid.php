@@ -177,7 +177,7 @@ class UserIndexUid extends ManyToOne
             }
             $users = User::loadMultiple($query->execute());
             foreach ($users as $user) {
-                $options[$user->id()] = \Drupal::entityManager()->getTranslationFromContext($user)->label();
+                $options[$user->id()] = \Drupal::entityTypeManager()->getTranslationFromContext($user)->label();
             }
 
             $default_value = (array) $this->value;
@@ -345,7 +345,7 @@ class UserIndexUid extends ManyToOne
             $this->value = array_filter($this->value);
             $users = User::loadMultiple($this->value);
             foreach ($users as $user) {
-                $this->valueOptions[$user->id()] = \Drupal::entityManager()->getTranslationFromContext($user)->label();
+                $this->valueOptions[$user->id()] = \Drupal::entityTypeManager()->getTranslationFromContext($user)->label();
             }
         }
         return parent::adminSummary();
