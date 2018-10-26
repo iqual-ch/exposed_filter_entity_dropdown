@@ -101,7 +101,6 @@ class NodeIndexNid extends ManyToOne
     protected function defineOptions()
     {
         $options = parent::defineOptions();
-        $options['variant'] = ['default' => 'selection'];
         $options['type'] = ['default' => 'textfield'];
         $options['limit'] = ['default' => true];
         $options['ctypeid'] = ['default' => ''];
@@ -112,15 +111,7 @@ class NodeIndexNid extends ManyToOne
 
     public function buildExtraOptionsForm(&$form, FormStateInterface $form_state)
     {
-
-        $form['variant'] = [
-            '#type' => 'select',
-            '#title' => $this->t('Select filter variant'),
-            '#default_value' => $this->options['variant'],
-            '#options' => ['selection' => $this->t('Dropdown/Autocomplete'), 'classic' => $this->t('Drupal core filter')],
-        ];
-
-        $contentTypes = $this->nodeTypeStorage->loadMultiple();
+       $contentTypes = $this->nodeTypeStorage->loadMultiple();
         $options = [];
         foreach ($contentTypes as $ctype) {
             $options[$ctype->id()] = $ctype->label();
@@ -140,11 +131,6 @@ class NodeIndexNid extends ManyToOne
                     '#options' => $options,
                     '#description' => $this->t('Select which content type to show nodes for in the regular options.'),
                     '#default_value' => $this->options['ctypeid'],
-                    '#states' => [
-                        'visible' => [
-                            ':input[name="options[variant]"]' => ['value' => 'selection'],
-                        ],
-                    ],
                 ];
             }
         }
@@ -154,11 +140,6 @@ class NodeIndexNid extends ManyToOne
             '#title' => $this->t('Selection type'),
             '#options' => ['select' => $this->t('Dropdown'), 'textfield' => $this->t('Autocomplete')],
             '#default_value' => $this->options['type'],
-            '#states' => [
-                'visible' => [
-                    ':input[name="options[variant]"]' => ['value' => 'selection'],
-                ],
-            ],
         ];
     }
 
@@ -316,12 +297,6 @@ class NodeIndexNid extends ManyToOne
 
     public function validateExposed(&$form, FormStateInterface $form_state)
     {
-        if ($this->options['variant'] == 'classic') {
-            parent::validateExposed($form, $form_state);
-            return;
-
-        }
-
         if (empty($this->options['exposed'])) {
             return;
         }
@@ -349,12 +324,6 @@ class NodeIndexNid extends ManyToOne
 
     protected function valueSubmit($form, FormStateInterface $form_state)
     {
-        if ($this->options['variant'] == 'classic') {
-            parent::valueSubmit($form, $form_state);
-            return;
-
-        }
-
         // prevent array_filter from messing up our arrays in parent submit.
     }
 
