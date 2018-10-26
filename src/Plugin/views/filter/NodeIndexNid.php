@@ -35,7 +35,7 @@ class NodeIndexNid extends ManyToOne
     /**
      * The entity storage.
      *
-     * @var \Drupal\node\EntityStorageInterface
+     * @var \Drupal\Core\Entity\EntityStorageInterface
      */
     protected $nodeTypeStorage;
 
@@ -49,7 +49,7 @@ class NodeIndexNid extends ManyToOne
      * @param mixed $plugin_definition
      *   The plugin implementation definition.
      * @param \Drupal\Core\Entity\EntityStorageInterface $node_type_storage
-     *   The node storage.
+     *   The node type storage.
      * @param \Drupal\node\NodeStorageInterface $node_storage
      *   The node storage.
      */
