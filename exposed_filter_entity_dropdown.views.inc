@@ -20,19 +20,35 @@ function exposed_filter_entity_dropdown_field_views_data_alter(array &$data, Fie
 
         foreach ($data as $table_name => $table_data) {
             if (isset($data[$table_name][$column_real_name])) {
-                $title_autocomplete = $data[$table_name][$column_real_name]['title'] . '[Autocomplete Filter]';
+                $title_autocomplete = $data[$table_name][$column_real_name]['title'] . ' [Autocomplete Filter]';
                 $title_short_autocomplete = $data[$table_name][$column_real_name]['title short'] . '[Autocomplete Filter]';
-
-                $data[$table_name]['autocomplete'] = [
+                $data[$table_name]['autocomplete_' . $column_real_name] = [
                     'group' => $data[$table_name][$column_real_name]['group'],
                     'title' => $title_autocomplete,
                     'title short' => $title_short_autocomplete,
                     'help' => $data[$table_name][$column_real_name]['help'],
                 ];
-                $data[$table_name]['autocomplete']['filter'] = $data[$table_name][$column_real_name]['filter'];
-                $data[$table_name]['autocomplete']['filter']['id'] = 'node_index_nid';
+                $data[$table_name]['autocomplete_' . $column_real_name]['filter'] = $data[$table_name][$column_real_name]['filter'];
+                $data[$table_name]['autocomplete_' . $column_real_name]['filter']['id'] = 'node_index_nid';
 
             }
         }
     }
+}
+
+function exposed_filter_entity_dropdown_views_data_alter(array &$data)
+{
+    $data['node_field_data']['autocomplete_user'] = [
+        'title' => t('Authored By [Autocomplete Filter]'),
+        'group' => t('Content'),
+        'title short' => t('Authored By [Autocomplete Filter]'),
+        'help' => '',
+        'filter' => [
+            'title' => t('Authored By [Autocomplete Filter]'),
+            'help' => t('Authored By [Autocomplete Filter]'),
+            'field' => 'uid',
+            'id' => 'user_index_uid',
+        ],
+    ];
+
 }

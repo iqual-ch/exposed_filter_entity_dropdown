@@ -26,3 +26,30 @@ views.filter.node_index_nid:
       sequence:
         type: integer
         label: 'Value'
+
+views.argument.user_index_uid:
+  type: views.argument.many_to_one
+  label: 'User ID'
+
+views.filter.user_index_uid:
+  type: views.filter.many_to_one
+  label: 'User ID'
+  mapping:
+    ctype:
+      type: string
+      label: 'Content type'
+    type:
+      type: string
+      label: 'Selection type'
+    limit:
+      type: boolean
+      label: 'Limit to content type'
+    error_message:
+      type: boolean
+      label: 'Display error message'
+    value:
+      type: sequence
+      label: 'Values'
+      sequence:
+        type: integer
+        label: 'Value'
