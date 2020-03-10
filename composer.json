@@ -1,0 +1,10 @@
+{
+  "name": "iqual/exposed_filter_entity_dropdown",
+  "description": "Allows reference filter to be displayed as dropdowns.",
+  "type": "drupal-custom-module",
+  "homepage": "https://github.com/iqual-ch/exposed_filter_entity_dropdown",
+  "support": {
+    "issues": "https://github.com/iqual-ch/exposed_filter_entity_dropdown/issues",
+    "source": "https://github.com/iqual-ch/exposed_filter_entity_dropdown"
+  }
+}
