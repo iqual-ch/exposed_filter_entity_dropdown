@@ -14,7 +14,7 @@ function exposed_filter_entity_dropdown_field_views_data_alter(array &$data, Fie
 {
     if ($field_storage->getType() == 'entity_reference' && $field_storage->getSetting('target_type') == 'node') {
         $entity_type_id = $field_storage->getTargetEntityTypeId();
-        $entity_manager = \Drupal::entityManager();
+        $entity_manager = \Drupal::entityTypeManager();
         $table_mapping = $entity_manager->getStorage($entity_type_id)->getTableMapping();
         $column_real_name = $table_mapping->getFieldColumnName($field_storage, 'target_id');
 
