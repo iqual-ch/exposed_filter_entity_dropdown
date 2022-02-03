@@ -69,8 +69,8 @@ class UserIndexUid extends ManyToOne
             $configuration,
             $plugin_id,
             $plugin_definition,
-            $container->get('entity.manager')->getStorage('user_role'),
-            $container->get('entity.manager')->getStorage('user')
+            $container->get('entity_type.manager')->getStorage('user_role'),
+            $container->get('entity_type.manager')->getStorage('user')
         );
     }
 
