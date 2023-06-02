@@ -5,6 +5,7 @@ namespace Drupal\exposed_filter_entity_dropdown\Plugin\views\filter;
 use Drupal\Core\Entity\Element\EntityAutocomplete;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\node\Entity\Node;
 use Drupal\node\NodeStorageInterface;
 use Drupal\views\Plugin\views\display\DisplayPluginBase;
@@ -21,7 +22,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class NodeIndexNid extends ManyToOne {
 
-  use \Drupal\Core\StringTranslation\StringTranslationTrait;
+  use StringTranslationTrait;
 
   /**
    * Stores the exposed input for this filter.
