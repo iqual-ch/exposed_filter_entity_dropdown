@@ -21,10 +21,14 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class UserIndexUid extends ManyToOne {
 
+  use \Drupal\Core\StringTranslation\StringTranslationTrait;
+
   /**
    * Stores the exposed input for this filter.
+   *
+   * @var array
    */
-  public $validated_exposed_input = NULL;
+  public $validatedExposedInput = NULL;
 
   /**
    * The user storage.
@@ -84,7 +88,7 @@ class UserIndexUid extends ManyToOne {
   }
 
   /**
-   *
+   * Has Extra Options.
    */
   public function hasExtraOptions() {
     return TRUE;
@@ -98,7 +102,7 @@ class UserIndexUid extends ManyToOne {
   }
 
   /**
-   *
+   * Define Options.
    */
   protected function defineOptions() {
     $options = parent::defineOptions();
@@ -110,7 +114,7 @@ class UserIndexUid extends ManyToOne {
   }
 
   /**
-   *
+   * Build Extra Options Form.
    */
   public function buildExtraOptionsForm(&$form, FormStateInterface $form_state) {
     $roles = $this->roleStorage->loadMultiple();
@@ -140,13 +144,16 @@ class UserIndexUid extends ManyToOne {
     $form['type'] = [
       '#type' => 'radios',
       '#title' => $this->t('Selection type'),
-      '#options' => ['select' => $this->t('Dropdown'), 'textfield' => $this->t('Autocomplete')],
+      '#options' => [
+        'select' => $this->t('Dropdown'),
+        'textfield' => $this->t('Autocomplete'),
+      ],
       '#default_value' => $this->options['type'],
     ];
   }
 
   /**
-   *
+   * Value Form.
    */
   protected function valueForm(&$form, FormStateInterface $form_state) {
 
@@ -207,7 +214,8 @@ class UserIndexUid extends ManyToOne {
             $keys = array_keys($options);
             $default_value = array_shift($keys);
           }
-          // Due to #1464174 there is a chance that array('') was saved in the admin ui.
+          // Due to #1464174 there is a chance that array('') was saved in the
+          // admin ui.
           // Let's choose a safe default value.
           elseif ($default_value == ['']) {
             $default_value = 'All';
@@ -239,12 +247,12 @@ class UserIndexUid extends ManyToOne {
       $this->helper->buildOptionsForm($form, $form_state);
 
       // Show help text if not exposed to end users.
-      $form['value']['#description'] = t('Leave blank for all. Otherwise, the first selected user will be the default instead of "Any".');
+      $form['value']['#description'] = $this->t('Leave blank for all. Otherwise, the first selected user will be the default instead of "Any".');
     }
   }
 
   /**
-   *
+   * Value Validate.
    */
   protected function valueValidate($form, FormStateInterface $form_state) {
     // We only validate if they've chosen the text field style.
@@ -262,7 +270,7 @@ class UserIndexUid extends ManyToOne {
   }
 
   /**
-   *
+   * Accept Exposed Input.
    */
   public function acceptExposedInput($input) {
     if (empty($this->options['exposed'])) {
@@ -278,7 +286,7 @@ class UserIndexUid extends ManyToOne {
     // If view is an attachment and is inheriting exposed filters, then assume
     // exposed input has already been validated.
     if (!empty($this->view->is_attachment) && $this->view->display_handler->usesExposed()) {
-      $this->validated_exposed_input = (array) $this->view->exposed_raw_input[$this->options['expose']['identifier']];
+      $this->validatedExposedInput = (array) $this->view->exposed_raw_input[$this->options['expose']['identifier']];
     }
 
     // If we're checking for EMPTY or NOT, we don't need any input, and we can
@@ -288,15 +296,15 @@ class UserIndexUid extends ManyToOne {
     }
 
     // If it's non-required and there's no value don't bother filtering.
-    if (!$this->options['expose']['required'] && empty($this->validated_exposed_input)) {
+    if (!$this->options['expose']['required'] && empty($this->validatedExposedInput)) {
       return FALSE;
     }
 
     $rc = parent::acceptExposedInput($input);
     if ($rc) {
       // If we have previously validated input, override.
-      if (isset($this->validated_exposed_input)) {
-        $this->value = $this->validated_exposed_input;
+      if (isset($this->validatedExposedInput)) {
+        $this->value = $this->validatedExposedInput;
       }
     }
 
@@ -304,7 +312,7 @@ class UserIndexUid extends ManyToOne {
   }
 
   /**
-   *
+   * Validate Exposed.
    */
   public function validateExposed(&$form, FormStateInterface $form_state) {
     if (empty($this->options['exposed'])) {
@@ -316,7 +324,7 @@ class UserIndexUid extends ManyToOne {
     // We only validate if they've chosen the text field style.
     if ($this->options['type'] != 'textfield') {
       if ($form_state->getValue($identifier) != 'All') {
-        $this->validated_exposed_input = (array) $form_state->getValue($identifier);
+        $this->validatedExposedInput = (array) $form_state->getValue($identifier);
       }
       return;
     }
@@ -327,20 +335,20 @@ class UserIndexUid extends ManyToOne {
 
     if ($values = $form_state->getValue($identifier)) {
       foreach ($values as $value) {
-        $this->validated_exposed_input[] = $value['target_id'];
+        $this->validatedExposedInput[] = $value['target_id'];
       }
     }
   }
 
   /**
-   *
+   * Value Submit.
    */
   protected function valueSubmit($form, FormStateInterface $form_state) {
     // Prevent array_filter from messing up our arrays in parent submit.
   }
 
   /**
-   *
+   * Build Expose Form.
    */
   public function buildExposeForm(&$form, FormStateInterface $form_state) {
     parent::buildExposeForm($form, $form_state);
@@ -355,7 +363,7 @@ class UserIndexUid extends ManyToOne {
   }
 
   /**
-   *
+   * Admin Summary.
    */
   public function adminSummary() {
     // Set up $this->valueOptions for the parent summary.
