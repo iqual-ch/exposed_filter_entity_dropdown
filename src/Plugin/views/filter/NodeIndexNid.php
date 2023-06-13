@@ -89,7 +89,7 @@ class NodeIndexNid extends ManyToOne {
   }
 
   /**
-   * Has Extra Options.
+   * {@inheritdoc}
    */
   public function hasExtraOptions() {
     return TRUE;
@@ -103,7 +103,7 @@ class NodeIndexNid extends ManyToOne {
   }
 
   /**
-   * Define Options.
+   * {@inheritdoc}
    */
   protected function defineOptions() {
     $options = parent::defineOptions();
@@ -116,7 +116,7 @@ class NodeIndexNid extends ManyToOne {
   }
 
   /**
-   * Build Extra Options Form.
+   * {@inheritdoc}
    */
   public function buildExtraOptionsForm(&$form, FormStateInterface $form_state) {
     $contentTypes = $this->nodeTypeStorage->loadMultiple();
@@ -155,7 +155,7 @@ class NodeIndexNid extends ManyToOne {
   }
 
   /**
-   * Value Form.
+   * {@inheritdoc}
    */
   protected function valueForm(&$form, FormStateInterface $form_state) {
 
@@ -257,7 +257,7 @@ class NodeIndexNid extends ManyToOne {
   }
 
   /**
-   * Value Validate.
+   * {@inheritdoc}
    */
   protected function valueValidate($form, FormStateInterface $form_state) {
     // We only validate if they've chosen the text field style.
@@ -275,7 +275,7 @@ class NodeIndexNid extends ManyToOne {
   }
 
   /**
-   * Accept Exposed Input.
+   * {@inheritdoc}
    */
   public function acceptExposedInput($input) {
     if (empty($this->options['exposed'])) {
@@ -317,7 +317,7 @@ class NodeIndexNid extends ManyToOne {
   }
 
   /**
-   * Validate Exposed.
+   * {@inheritdoc}
    */
   public function validateExposed(&$form, FormStateInterface $form_state) {
     if (empty($this->options['exposed'])) {
@@ -346,14 +346,14 @@ class NodeIndexNid extends ManyToOne {
   }
 
   /**
-   * Value Submit.
+   * {@inheritdoc}
    */
   protected function valueSubmit($form, FormStateInterface $form_state) {
     // Prevent array_filter from messing up our arrays in parent submit.
   }
 
   /**
-   * Build Expose Form.
+   * {@inheritdoc}
    */
   public function buildExposeForm(&$form, FormStateInterface $form_state) {
     parent::buildExposeForm($form, $form_state);
@@ -368,7 +368,7 @@ class NodeIndexNid extends ManyToOne {
   }
 
   /**
-   * Admin Summary.
+   * {@inheritdoc}
    */
   public function adminSummary() {
     // Set up $this->valueOptions for the parent summary.
