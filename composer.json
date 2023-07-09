@@ -6,5 +6,9 @@
   "support": {
     "issues": "https://github.com/iqual-ch/exposed_filter_entity_dropdown/issues",
     "source": "https://github.com/iqual-ch/exposed_filter_entity_dropdown"
+  },
+  "require": {
+    "php": "^8.1",
+    "drupal/core": "^9.5 || ^10"
   }
 }

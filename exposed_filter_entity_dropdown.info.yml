@@ -1,6 +1,6 @@
 name: Exposed Filter Entity Dropdown
 description: Changes the exposed filter text input field to a select dropdown
 package: Custom
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^9.5 || ^10
 
 type: module
