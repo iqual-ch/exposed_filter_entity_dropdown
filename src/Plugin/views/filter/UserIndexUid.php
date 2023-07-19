@@ -189,6 +189,7 @@ class UserIndexUid extends ManyToOne {
     else {
       $options = [];
       $query = \Drupal::entityQuery('user')
+        ->accessCheck(FALSE)
         ->sort('name');
       if ($this->options['limit']) {
         $query->condition('roles', $role->id());
