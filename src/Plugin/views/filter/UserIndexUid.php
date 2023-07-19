@@ -177,7 +177,11 @@ class UserIndexUid extends ManyToOne {
       if ($this->options['limit']) {
         $form['value']['#type'] = 'entity_autocomplete';
         $form['value']['#target_type'] = 'user';
-        $form['value']['#selection_settings']['target_bundles'] = [$role->id()];
+        $form['value']['#selection_settings'] = [
+          'filter' => [
+            'role' => [$role->id()],
+          ],
+        ];
         $form['value']['#tags'] = TRUE;
         $form['value']['#process_default_value'] = FALSE;
       }
