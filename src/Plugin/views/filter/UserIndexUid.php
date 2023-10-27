@@ -3,10 +3,10 @@
 namespace Drupal\exposed_filter_entity_dropdown\Plugin\views\filter;
 
 use Drupal\Core\Entity\Element\EntityAutocomplete;
-use Drupal\user\RoleStorageInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\user\Entity\User;
+use Drupal\user\RoleStorageInterface;
 use Drupal\user\UserStorageInterface;
 use Drupal\views\Plugin\views\display\DisplayPluginBase;
 use Drupal\views\Plugin\views\filter\ManyToOne;
@@ -177,7 +177,11 @@ class UserIndexUid extends ManyToOne {
       if ($this->options['limit']) {
         $form['value']['#type'] = 'entity_autocomplete';
         $form['value']['#target_type'] = 'user';
-        $form['value']['#selection_settings']['target_bundles'] = [$role->id()];
+        $form['value']['#selection_settings'] = [
+          'filter' => [
+            'role' => [$role->id()],
+          ],
+        ];
         $form['value']['#tags'] = TRUE;
         $form['value']['#process_default_value'] = FALSE;
       }
@@ -185,6 +189,7 @@ class UserIndexUid extends ManyToOne {
     else {
       $options = [];
       $query = \Drupal::entityQuery('user')
+        ->accessCheck(FALSE)
         ->sort('name');
       if ($this->options['limit']) {
         $query->condition('roles', $role->id());
