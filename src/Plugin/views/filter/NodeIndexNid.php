@@ -189,6 +189,7 @@ class NodeIndexNid extends ManyToOne {
             // @todo Sorting on content type properties -
             //   https://www.drupal.org/node/1821274.
         ->sort('title')
+        ->accessCheck(TRUE)
         ->addTag('node_access');
       if ($this->options['limit']) {
         $query->condition('type', $contentType->id());
