@@ -81,7 +81,7 @@ class UserIndexUid extends ManyToOne {
   /**
    * {@inheritdoc}
    */
-  public function init(ViewExecutable $view, DisplayPluginBase $display, array &$options = NULL) {
+  public function init(ViewExecutable $view, DisplayPluginBase $display, ?array &$options = NULL) {
     parent::init($view, $display, $options);
     if (!empty($this->definition['role'])) {
       $this->options['roleid'] = $this->definition['role'];
